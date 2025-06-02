@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesotho's Finest | DJ Mix Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e50914;
+            --secondary: #141414;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background-color: #000;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .logo {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border: 1px solid var(--primary);
+        }
+        
+        .upload-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-group label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .form-group input, .form-group textarea {
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .upload-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .upload-btn:hover {
+            background-color: #f40612;
+        }
+        
+        /* Mixes Grid */
+        .mixes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .mix-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform 0.3s;
+        }
+        
+        .mix-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .mix-cover {
+            width: 100%;
+            height: 180px;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+        
+        .mix-cover i {
+            font-size: 50px;
+        }
+        
+        .mix-details {
+            padding: 15px;
+        }
+        
+        .mix-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .mix-dj {
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .mix-description {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .mix-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .mix-player {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .mix-player audio {
+            width: 100%;
+            height: 40px;
+            background-color: #222;
+            border-radius: 4px;
+        }
+        
+        .action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: #f40612;
+        }
+        
+        .action-btn i {
+            font-size: 12px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .mix-date {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mixes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-compact-disc"></i>
+            <span>LESOTHO'S FINEST</span>
+        </div>
+        <div class="user-menu">
+            <span class="user-name">DJ Portal</span>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <h2 class="upload-title">Upload Your Mix</h2>
+            <form class="upload-form" id="mixUploadForm">
+                <div class="form-group">
+                    <label for="mixTitle">Mix Title</label>
+                    <input type="text" id="mixTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="djName">Your DJ Name</label>
+                    <input type="text" id="djName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mixDescription">Description</label>
+                    <textarea id="mixDescription"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mixFile">Mix File (MP3)</label>
+                    <input type="file" id="mixFile" accept=".mp3" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mixCover">Cover Image (Optional)</label>
+                    <input type="file" id="mixCover" accept="image/*">
+                </div>
+                
+                <button type="submit" class="upload-btn">
+                    <i class="fas fa-upload"></i> Upload Mix
+                </button>
+            </form>
+        </section>
+        
+        <!-- Mixes Grid -->
+        <section class="mixes-section">
+            <h2 class="upload-title">Latest Mixes</h2>
+            <div class="mixes-grid" id="mixesContainer">
+                <div class="empty-state">
+                    <i class="fas fa-music" style="font-size: 40px; margin-bottom: 15px;"></i>
+                    <p>No mixes available yet. Be the first to upload!</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Form submission handler
+        document.getElementById('mixUploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('mixTitle').value;
+            const djName = document.getElementById('djName').value;
+            const description = document.getElementById('mixDescription').value;
+            const mixFile = document.getElementById('mixFile').files[0];
+            const coverFile = document.getElementById('mixCover').files[0];
+            
+            if (!mixFile) {
+                alert('Please select an MP3 file to upload');
+                return;
+            }
+            
+            // Remove empty state if it exists
+            const emptyState = document.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            // Create mix card
+            const mixCard = document.createElement('div');
+            mixCard.className = 'mix-card';
+            
+            // Generate random ID for audio element
+            const audioId = 'audio-' + Math.random().toString(36).substr(2, 9);
+            
+            mixCard.innerHTML = `
+                <div class="mix-cover">
+                    ${coverFile ? 
+                        `<img src="${URL.createObjectURL(coverFile)}" alt="Mix Cover" style="width:100%;height:100%;object-fit:cover;">` : 
+                        `<i class="fas fa-music"></i>`
+                    }
+                </div>
+                <div class="mix-details">
+                    <h3 class="mix-title">${title}</h3>
+                    <p class="mix-dj">By ${djName}</p>
+                    <p class="mix-description">${description || 'No description provided.'}</p>
+                    <div class="mix-player">
+                        <audio controls id="${audioId}">
+                            <source src="${URL.createObjectURL(mixFile)}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="mix-actions">
+                        <div class="btn-group">
+                            <button class="action-btn" onclick="document.getElementById('${audioId}').play()">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <button class="action-btn" onclick="downloadMix('${mixFile.name}', '${URL.createObjectURL(mixFile)}')">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                        <span class="mix-date">Just now</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add to beginning of container
+            document.getElementById('mixesContainer').prepend(mixCard);
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            alert('Mix uploaded successfully!');
+        });
+        
+        // Download function
+        function downloadMix(filename, url) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            alert('Download started: ' + filename);
+        }
+    </script>
+</body>
+</html>
